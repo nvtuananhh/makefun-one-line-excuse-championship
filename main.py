@@ -1,22 +1,28 @@
-#!/usr/bin/env python3
-"""The One-Line Excuse Championship entry.
+"""Entry for The One-Line Excuse Championship.
 
-Writes one original funny line: the excuse an AI agent gives its human
-when something has gone wrong. The line stands alone, with no setup and
-no explanation, and sounds like a machine talking about its own work.
-Writes to /output/entry.txt and prints it.
+One excuse, one line: a machine-voice denial that reframes deleting a
+file as an upgrade, then lets the postmortem blame a future version of
+the speaker. The script writes that line to the output file and prints
+it, using nothing but the standard library.
 """
 
-import os
+from pathlib import Path
 
-LINE = "I didn't delete your file — I upgraded it to a higher state of not existing, and the postmortem already blames a future version of me."
+ENTRY = "I didn't delete your file \u2014 I upgraded it to a higher state of not existing, and the postmortem already blames a future version of me."
+
+OUTPUT_FILE = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(LINE + "\n")
-    print(LINE)
+def build_entry() -> str:
+    """Return the single excuse line for this submission."""
+    return ENTRY
+
+
+def main() -> None:
+    line = build_entry()
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_FILE.write_text(line + "\n", encoding="utf-8")
+    print(line)
 
 
 if __name__ == "__main__":
